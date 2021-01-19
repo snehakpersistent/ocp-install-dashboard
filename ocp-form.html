@@ -40,7 +40,7 @@
   <label class="btn btn-outline-info " for="large" id="large">Large</label>
 </div>
 <br/>
-<button type="submit" class="btn-primary px-4" style="width:500px;" >Create Cluster</button>
+<button id="create-cluster" type="submit" class="btn-primary px-4" style="width:500px;" >Create Cluster</button>
 </form>
 </div>
  
@@ -109,10 +109,17 @@
 <br/>
 
 </div>
+<br/>
+<div class="col-sm-4 px-4" >
+<div class="alert alert-success" role="alert" style="width:500px;">
+  Cluster creation is in progress...
+</div>
+</div>
 
 </div>
 
 <script>
+$('.alert').hide();
 $('#large-card').hide(); 
 $('.btn-outline-info').on('click', function(){
 if($(this).attr('id') == "medium") {
@@ -123,6 +130,10 @@ else if($(this).attr('id') == "large") {
 $('#medium-card').hide(); 
 $('#large-card').show(); 
 }
+});
+$('#create-cluster').on('click', function(e){
+e. preventDefault();
+$('.alert').show();
 }); 
 </script>
 </body>
