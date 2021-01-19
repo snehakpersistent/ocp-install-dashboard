@@ -11,8 +11,6 @@
 <div class="row px-4">
 <div class="col-sm-4 px-4" >
 
-
-
 <form method="post" action="/deploy" class="needs-validation ">
   <div class="form-group pt-md-3">
     <label for="name"><b>Cluster Name</b></label>
@@ -34,9 +32,9 @@
   <div class="form-group py-md-3">
   <label for="name"><b>Cluster Size</b></label><br/>
  
-  <input type="radio" class="btn-check" name="options" id="medium" autocomplete="off" checked />
+  <input type="radio" class="btn-check" name="options" id="medium" autocomplete="off" value="medium" checked />
   <label class="btn btn-outline-info " for="medium" id="medium">Medium</label>
-  <input type="radio" class="btn-check" name="options" id="large" autocomplete="off" />
+  <input type="radio" class="btn-check" name="options" id="large" value="large" autocomplete="off" />
   <label class="btn btn-outline-info " for="large" id="large">Large</label>
 </div>
 <br/>
@@ -109,7 +107,6 @@
 <br/>
 
 </div>
-
 </div>
 
 <script>
