@@ -13,19 +13,18 @@
 <div class="col-sm-4 px-4" >
 
 
-
-<form class="needs-validation ">
+<form method="post" action="/deploy" class="needs-validation ">
   <div class="form-group required pt-md-3">
     <label class="control-label" for="name"><b>Cluster Name</b></label>
-    <input type="text" class="form-control" id="name" placeholder="Enter cluster name" required>
+    <input type="text" class="form-control" id="name" name="name" placeholder="Enter cluster name" required>
   </div>
   <div class="form-group required pt-md-3">
     <label class="control-label" for="description"><b>Description</b></label>
-    <input type="text" class="form-control" id="description" placeholder="Enter a short description" required>	 
+    <input type="text" class="form-control" id="description" name="description" placeholder="Enter a short description" required>	 
    </div>
   <div class="form-group required pt-md-3">
      <label class="control-label" for="version"><b>Select Version</b></label> <br/>
-  <select class="form-select" id="ocpversion" required>
+  <select class="form-select" id="ocpversion" name="ocpversion" required>
     <option selected disabled value="">Choose OCP version</option>
     <option value="4.5.24">4.5.24</option>
     <option value="4.6.11">4.6.11</option>
@@ -35,9 +34,9 @@
   <div class="form-group py-md-3">
   <label for="name"><b>Cluster Size</b></label><br/>
  
-  <input type="radio" class="btn-check" name="options" id="medium" autocomplete="off" checked />
+  <input type="radio" class="btn-check" name="options" id="medium" autocomplete="off" value="medium" checked />
   <label class="btn btn-outline-info " for="medium" id="medium">Medium</label>
-  <input type="radio" class="btn-check" name="options" id="large" autocomplete="off" />
+  <input type="radio" class="btn-check" name="options" id="large" value="large" autocomplete="off" />
   <label class="btn btn-outline-info " for="large" id="large">Large</label>
 </div>
 <br/>
