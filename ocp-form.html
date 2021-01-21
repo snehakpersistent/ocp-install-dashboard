@@ -16,7 +16,7 @@
 <div class="col-sm-4 px-4" >
 
 
-<form method="post" name="input-form" action="/deploy" class="needs-validation ">
+<form method="post" id="input-form" name="input-form" action="/deploy" class="needs-validation ">
   <div class="form-group required pt-md-3">
     <label class="control-label" for="name"><b>Cluster Name</b></label>
     <input type="text" class="form-control" id="name" name="name" placeholder="Enter cluster name" required>
@@ -119,9 +119,6 @@
 	<div class="spinner-border text-success" role="status">  
 	</div>
 </div>
-<div class="alert alert-danger" role="alert" style="width:500px;">
-	Please enter all the required data!
-</div>
 </div>
 
 </div>
@@ -141,20 +138,14 @@ $('#large-card').show();
 });
 
 // On submit event
-$('#create-cluster').on('click', function(e){
-	e. preventDefault(); // Do not reload page on submit
-	//Display error if required fields are empty
-	if (document.forms["input-form"]["name"].value == "" ||
-		document.forms["input-form"]["description"].value == "" ||
-		document.forms["input-form"]["ocpversion"].value == "") {
-		$('.alert-success').hide();
-		$('.alert-danger').show();
-	}
-	// Display cluster creation message
-	else {
-		$('.alert-danger').hide();
+$('#input-form').on('submit', function(){
+	//DDisplay cluster creation message if required fields are not empty
+	if (document.forms["input-form"]["name"].value != "" &&
+		document.forms["input-form"]["description"].value != "" &&
+		document.forms["input-form"]["ocpversion"].value != "") {
 		$('.alert-success').show();
 	}
+	return true;
 }); 
 </script>
 </body>
