@@ -10,8 +10,18 @@
   <div class="jumbotron px-2" style="background-color:RoyalBlue;color:white;  margin: 0 auto">
     <h1 class=" display-3">Openshift on Power</h1>      
     <p>Build your own Openshift Container Platform Cluster on PowerVM</p>
-  </div>
   
+  <nav class="navbar navbar-expand-xl" style="background-color:#6988E7; margin: 0 auto">
+	<div class="collapse navbar-collapse" id="navbarNavDropdown" style="padding-left: 10px" method="get">
+		<form class="form-inline my-2 my-lg-0" >
+			<button id="create-cluster-tab" formaction="/create" class="btn btn-light " type="submit">Create Cluster</button>
+			<button id="display-stack-tab" formaction="/refresh" class="btn btn-light" type="submit">Display Stacks</button>
+			<button id="logout" formaction="/" class="btn btn-light" type="submit">Logout</button>
+		</form>
+	</div>
+  </nav>
+  </div>
+  </br>
 <div class="row px-4">
 <div class="col-sm-4 px-4" >
 
@@ -126,6 +136,8 @@
 <script>
 $('.alert').hide();
 $('#large-card').hide(); 
+$('#create-cluster-tab').attr('disabled',true);
+
 $('.btn-outline-info').on('click', function(){
 if($(this).attr('id') == "medium") {
 $('#large-card').hide(); 
