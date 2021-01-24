@@ -1,165 +1,193 @@
 <html>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+  integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous" />
 
-<style>
-.form-group.required .control-label:after {content:"* "; color:red;}
-</style>
 
-<body  onload="myFunction()">
+<body onload="myFunction()">
+  <style>
+    .form-group.required .control-label:after {
+      content: "* ";
+      color: red;
+    }
+  </style>
+
   <div class="jumbotron px-2" style="background-color:RoyalBlue;color:white;  margin: 0 auto">
-    <h1 class=" display-3">Openshift on Power</h1>      
+    <h1 class=" display-3">Openshift on Power</h1>
     <p>Build your own Openshift Container Platform Cluster on PowerVM</p>
+
+    <nav class="navbar navbar-expand-xl" style="background-color:#6988E7; margin: 0 auto">
+      <div class="collapse navbar-collapse" id="navbarNavDropdown" style="padding-left: 10px" method="get">
+        <form class="form-inline my-2 my-lg-0" method="post">
+          <div class="form-group required pt-md-3 d-none">
+            <label class="control-label" for="emailid"><b>Login Email</b></label>
+            <input type="text" class="form-control" id="loginemailid" name="emailid" placeholder="Emailid">
+          </div>
+          <button id="create-cluster-tab" formaction="/create" class="btn btn-light " type="submit">Create
+            Cluster</button>
+          <button id="display-stack-tab" formaction="/refresh" class="btn btn-light" type="submit">Display
+            Stacks</button>
+          <button id="logout" formaction="/" class="btn btn-light" type="submit">Logout</button>
+        </form>
+      </div>
+    </nav>
   </div>
-  	 
-<div class="row">
-<div class="col-sm-4 px-4  " >
+  </br>
+  <div class="row px-4">
+    <div class="col-sm-4 px-4">
 
-<form method="post" id="input-form" name="input-form" action="/deploy" class="needs-validation ">
-  <div class="form-group required pt-md-3 d-none">
-    <label class="control-label" for="emailidtext"><b>Login Email</b></label>
-    <input type="text" class="form-control" id="emailidtext" name="emailid" placeholder="Emailid">
+
+      <form method="post" id="input-form" name="input-form" action="/deploy" class="needs-validation ">
+        <div class="form-group required pt-md-3">
+          <label class="control-label" for="emailid"><b>Login Email</b></label>
+          <input type="text" class="form-control" id="emailid" name="emailid" placeholder="Emailid">
+        </div>
+        <div class="form-group required pt-md-3">
+          <label class="control-label" for="name"><b>Cluster Name</b></label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Enter cluster name" required>
+        </div>
+        <div class="form-group required pt-md-3">
+          <label class="control-label" for="description"><b>Description</b></label>
+          <input type="text" class="form-control" id="description" name="description"
+            placeholder="Enter a short description" required>
+        </div>
+        <div class="form-group required pt-md-3">
+          <label class="control-label" for="version"><b>Select Version</b></label> <br />
+          <select class="form-select" id="ocpversion" name="ocpversion" required>
+            <option selected disabled value="">Choose OCP version</option>
+            <option value="4.5">4.5</option>
+            <option value="4.6">4.6</option>
+          </select>
+        </div>
+
+        <div class="form-group py-md-3">
+          <label for="name"><b>Cluster Size</b></label><br />
+
+          <input type="radio" class="btn-check" name="options" id="medium" autocomplete="off" value="medium" checked />
+          <label class="btn btn-outline-info " for="medium" id="medium">Medium</label>
+          <input type="radio" class="btn-check" name="options" id="large" value="large" autocomplete="off" />
+          <label class="btn btn-outline-info " for="large" id="large">Large</label>
+        </div>
+        <br />
+        <button id="create-cluster" type="submit" class="btn-primary px-4" style="width:500px;">Create Cluster</button>
+      </form>
+    </div>
+
+    <div class="col-sm-8 px-4" style="width: 700px;">
+      <div class="card " id="medium-card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Medium</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Create a medium sized cluster</h6>
+          <table class="table">
+            <tbody>
+              <tr>
+                <th scope="row">Node</th>
+                <td>Masters</td>
+                <td>Workers</td>
+              </tr>
+              <tr>
+                <th scope="row">#</th>
+                <td>3</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <th scope="row">Processors</th>
+                <td>1</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <th scope="row">Memory</th>
+                <td>32GB</td>
+                <td>32GB</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card " id="large-card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Large</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Create a large sized cluster</h6>
+          <table class="table">
+            <tbody>
+              <tr>
+                <th scope="row">Node</th>
+                <td>Masters</td>
+                <td>Workers</td>
+              </tr>
+              <tr>
+                <th scope="row">#</th>
+                <td>3</td>
+                <td>3</td>
+              </tr>
+              <tr>
+                <th scope="row">Processors</th>
+                <td>1</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <th scope="row">Memory</th>
+                <td>32GB</td>
+                <td>64GB</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <br />
+
+    </div>
+    <br />
+    <div class="col-sm-4 px-4">
+      <div class="alert alert-success" role="alert" style="width:500px;">
+        Cluster creation is in progress
+        <div class="spinner-border text-success" role="status">
+        </div>
+      </div>
+    </div>
+
   </div>
-  <div class="form-group required pt-md-3">
-    <label class="control-label" for="name"><b>Cluster Name</b></label>
-    <input type="text" class="form-control" id="name" name="name" placeholder="Enter cluster name" required>
-  </div>
-  <div class="form-group required pt-md-3">
-    <label class="control-label" for="description"><b>Description</b></label>
-    <input type="text" class="form-control" id="description" name="description" placeholder="Enter a short description" required>	 
-   </div>
-  <div class="form-group required pt-md-3">
-     <label class="control-label" for="version"><b>Select Version</b></label> <br/>
-  <select class="form-select" id="ocpversion" name="ocpversion" required>
-    <option selected disabled value="">Choose OCP version</option>
-    <option value="4.5">4.5</option>
-    <option value="4.6">4.6</option>
-  </select>
-</div>
 
-  <div class="form-group py-md-3">
-  <label for="name"><b>Cluster Size</b></label><br/>
- 
-  <input type="radio" class="btn-check" name="options" id="medium" autocomplete="off" value="medium" checked />
-  <label class="btn btn-outline-info " for="medium" id="medium">Medium</label>
-  <input type="radio" class="btn-check" name="options" id="large" value="large" autocomplete="off" />
-  <label class="btn btn-outline-info " for="large" id="large">Large</label>
-</div>
-<br/>
-<button id="create-cluster" type="submit" class="btn-primary px-4" style="width:500px;" >Create Cluster</button>
-</form>
-<br/>
-<div class="alert alert-success" role="alert" style="width:500px;">
-	Cluster creation is in progress   
-	<div class="spinner-border text-success" role="status">  
-	</div>
-</div>
-</div>
- 
-<div class="col-sm-2 ">
-<div class="card " id="medium-card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Medium</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Create a medium sized cluster</h6>
-     <table class="table">
-  <tbody>
-    <tr>
-      <th scope="row">Node</th>
-      <td>Masters</td>
-      <td>Workers</td>
-    </tr>
-    <tr>
-      <th scope="row">#</th>
-      <td>3</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th scope="row">Processors</th>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-	  <tr>
-      <th scope="row">Memory</th>
-      <td>32GB</td>
-      <td>32GB</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
+  <script>
+    $('.alert').hide();
+    $('#large-card').hide();
+    $('#create-cluster-tab').attr('disabled', true);
 
-<div class="card " id="large-card"  style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Large</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Create a large sized cluster</h6>
-     <table class="table">
-  <tbody>
-    <tr>
-      <th scope="row">Node</th>
-      <td>Masters</td>
-      <td>Workers</td>
-    </tr>
-    <tr>
-      <th scope="row">#</th>
-      <td>3</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th scope="row">Processors</th>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-	  <tr>
-      <th scope="row">Memory</th>
-      <td>32GB</td>
-      <td>64GB</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-<br/>
+    $('.btn-outline-info').on('click', function () {
+      if ($(this).attr('id') == "medium") {
+        $('#large-card').hide();
+        $('#medium-card').show();
+      }
+      else if ($(this).attr('id') == "large") {
+        $('#medium-card').hide();
+        $('#large-card').show();
+      }
+    });
 
-</div>
-<br/>
+    // On submit event
+    $('#input-form').on('submit', function () {
+      //DDisplay cluster creation message if required fields are not empty
+      if (document.forms["input-form"]["name"].value != "" &&
+        document.forms["input-form"]["description"].value != "" &&
+        document.forms["input-form"]["ocpversion"].value != "") {
+        $('.alert-success').show();
+      }
+      return true;
+    });
 
+    var data = '{{ js_data|safe }}';
+    obj = JSON.parse(data);
 
-
-</div>
-
-<script>
-$('.alert').hide();
-$('#large-card').hide(); 
-$('.btn-outline-info').on('click', function(){
-if($(this).attr('id') == "medium") {
-$('#large-card').hide(); 
-$('#medium-card').show(); 
-}
-else if($(this).attr('id') == "large") {
-$('#medium-card').hide(); 
-$('#large-card').show(); 
-}
-});
-
-// On submit event
-$('#input-form').on('submit', function(){
-	//DDisplay cluster creation message if required fields are not empty
-	if (document.forms["input-form"]["name"].value != "" &&
-		document.forms["input-form"]["description"].value != "" &&
-		document.forms["input-form"]["ocpversion"].value != "") {
-		$('.alert-success').show();
-	}
-	return true;
-}); 
-
-
-var data = '{{ js_data|safe }}';
-obj = JSON.parse(data);
-
-function myFunction(){
-document.getElementById("emailidtext").value = obj.loginEmail;
-}  
-</script>
+    function myFunction() {
+      document.getElementById("emailid").value = obj.emailid;
+      document.getElementById("loginemailid").value = obj.emailid;
+    }  
+  </script>
 </body>
+
 </html>
