@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Load Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+    integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+    integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+    crossorigin="anonymous"></script>
+
+  <style>
+    .float-container {
+      padding: 20px;
+    }
+
+    .float-child {
+      width: 300px;
+      float: left;
+      margin-top: 10px;
+    }
+
+    .button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+
+    .card-footer-div {
+      float: left;
+      width: 33%;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+    }
+  </style>
+  <script>
+    var data = '{{ js_data|safe }}';
+    var login_data = '{{ login_data|safe }}';
+    //var data = '{"Cluster": [{"ID": "71", "ClusterName": "soniatest2", "OcpVersion": "4.6", "Status": "Running"}, {"ID": "70", "ClusterName": "soniatest2", "OcpVersion": "4.6", "Status": "Failed"}, {"ID": "69", "ClusterName": "soniatest1", "OcpVersion": "4.6", "Status": "Failed"}, {"ID": "62", "ClusterName": "Praj-OCP111", "OcpVersion": "4.6", "Status": "Failed"}, {"ID": "49", "ClusterName": "praj-test2", "OcpVersion": "4.5", "Status": "Pending"}]}';
+    login_obj = JSON.parse(login_data);
+    obj = JSON.parse(data);
+    let arr = obj.Cluster;
+
+    function myFunction() {
+      document.getElementById("emailid").value = login_obj.emailid;
+      console.log(login_obj.emailid);
+      for (let i = 0; i < arr.length; i++) {
+        var arrayItem = arr[i];
+        var el = document.createElement('div');
+        var id = "stack" + i;
+        status = arrayItem.Status;
+        console.log(arrayItem.ClusterName);
+        colorCode = getColorCode(status);
+        console.log(colorCode);
+        imglink = "https:\/\/raw.githubusercontent.com\/sonia-garudi\/icons\/main\/icons\/"
+        if (status == "Running") {
+          divHTML = "<div class=\"card float-child\" style=\"margin-left:10px; border-color: " + colorCode + " ;\"><div class=\"card-body\" style=\"text-align: center\"><h2 class=\"card-title\">" + arrayItem.ClusterName + "</h2><hr><h6 class=\"card-text\">Running</h6><img src=\"" + imglink + "check-circle.svg\" alt=\"...\"></div><div class=\"card-footer\" style=\"padding:10px\"><div class=\"card-footer-div\" style=\"cursor:auto\" ><form action=\"\"><button style=\"all:unset;\" type=\"submit\"><img src=\"" + imglink + "disableretry.svg\" alt=\"...\"></button></form></div><div class=\"card-footer-div\" data-toggle=\"modal\" data-target=\"#exampleModal\"><button id=\"" + id + "\"  data-title=\"" + arrayItem.ID + "\"  onclick=loadModal(this.id) style=\"all:unset;\"><img src=\"" + imglink + "menu.svg\" alt=\"...\"></button></div><div class=\"card-footer-div\"><form action=\"\"><button style=\"all:unset;\"type=\"submit\" ><img src=\"" + imglink + "x.svg\" alt=\"...\"></button></form></div></div></div>";
+        }
+        if (status == "Pending") {
+          divHTML = "<div class=\"card float-child\" style=\"margin-left:10px; border-color: " + colorCode + ";\"><div class=\"card-body\" style=\"text-align: center\"><h2 class=\"card-title\">" + arrayItem.ClusterName + "</h2><hr><h6 class=\"card-text\">Pending</h6><img src=\"" + imglink + "activity.svg\" alt=\"...\"></div><div class=\"card-footer\" style=\"padding:10px\"><div class=\"card-footer-div\" style=\"cursor:auto\"><form action=\"\"><button style=\"all:unset;\" type=\"submit\" ><img src=\"" + imglink + "disableretry.svg\" alt=\"...\"></button></form></div><div class=\"card-footer-div\" data-toggle=\"modal\" data-target=\"#exampleModal\"><button id=\"" + id + "\" data-title=\"" + arrayItem.ID + "\"  onclick=loadModal(this.id) style=\"all:unset;\"><img src=\"" + imglink + "menu.svg\" alt=\"...\"></button></div><div class=\"card-footer-div\" style=\"cursor:auto\"><form action=\"\"><button style=\"all:unset;\"type=\"submit\" ><img src=\"" + imglink + "disabledelete.svg\" alt=\"...\"></button></form></div></div></div>";
+        }
+        if (status == "Failed") {
+          divHTML = "<div class=\"card float-child\" style=\"margin-left:10px; border-color: " + colorCode + ";\"><div class=\"card-body\" style=\"text-align: center\"><h2 class=\"card-title\">" + arrayItem.ClusterName + "</h2><hr><h6 class=\"card-text\">Failed</h6><img src=\"" + imglink + "alert-circle.svg\" alt=\"...\"></div><div class=\"card-footer\" style=\"padding:10px\"><div class=\"card-footer-div\"><form action=\"\"><button style=\"all:unset;\" type=\"submit\" ><img src=\"" + imglink + "rotate-cw.svg\" alt=\"...\"></button></form></div><div class=\"card-footer-div\" data-toggle=\"modal\" data-target=\"#exampleModal\"><button id=\"" + id + "\" data-title=\"" + arrayItem.ID + "\"  onclick=loadModal(this.id) style=\"all:unset;\"><img src=\"" + imglink + "menu.svg\" alt=\"...\"></button></div><div class=\"card-footer-div\" style=\"cursor:auto\"><form action=\"\"><button style=\"all:unset;\"type=\"submit\" ><img src=\"" + imglink + "disabledelete.svg\" alt=\"...\"></button></form></div></div></div>";
+        }
+
+        el.innerHTML = divHTML;
+        document.getElementById("mainStacksContainer").appendChild(el);
+      }
+    }
+
+    function loadModal(id) {
+      var a = document.getElementById(id);
+      var titleData = a.getAttribute("data-title");
+      var obj = arr.filter(item => {
+        return item.ID === titleData
+      })[0];
+      modalBodyHTML = "<br/><p>OCP Version: " + obj.OcpVersion + "</p><p>Cluster Status: " + obj.Status + "</p><p>Cluster ID: " + obj.ID + "</p>"
+      document.getElementById("modal-title").innerText = obj.ClusterName;
+      document.getElementById("modal-body").innerHTML = modalBodyHTML;
+      document.getElementById("modal-header").style.backgroundColor = getColorCode(obj.Status);
+    }
+
+    function getColorCode(status) {
+      console.log(status);
+      if (status == "Running") { return "#4CAF50"; }
+      if (status == "Pending") { return "#E67E22"; }
+      if (status == "Failed") { return "#E74C3C"; }
+    }
+
+
+  </script>
+</head>
+
+<body onload="myFunction()">
+  <div class="jumbotron px-2" style="background-color:RoyalBlue;color:white;  margin: 0 auto">
+    <h1 class=" display-3">Openshift on Power</h1>
+    <p>Build your own Openshift Container Platform Cluster on PowerVM</p>
+    <nav class="navbar navbar-expand-xl" style="background-color:#6988E7; margin: 0 auto">
+      <div class="collapse navbar-collapse" id="navbarNavDropdown" style="padding-left: 10px" method="get">
+        <form class="form-inline my-2 my-lg-0" method="post">
+          <div class="form-group required pt-md-3  ">
+            <label class="control-label" for="emailid"><b>Login Email</b></label>
+            <input type="text" class="form-control" id="emailid" name="emailid" placeholder="Emailid">
+          </div>
+          <button id="create-cluster-tab" formaction="/create" class="btn btn-light " type="submit">Create
+            Cluster</button>
+          <button id="refresh-stack-tab" formaction="/refresh" class="btn btn-light" type="submit">Refresh
+            Stacks</button>
+          <button id="logout" formaction="/" class="btn btn-light" type="submit">Logout</button>
+        </form>
+      </div>
+    </nav>
+  </div>
+  <br />
+  <div id="mainStacksContainer" class="float-container">
+  </div>
+  <br />
+  <div class="modal fade" id="exampleModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div id="modal-header" class="modal-header" style="background-color: #F8C471">
+          <h4 id="modal-title" class="modal-title">
+          </h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">
+              ×</span>
+          </button>
+        </div>
+        <div id="modal-body" class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</body>
+
+</html>
