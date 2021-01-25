@@ -3,7 +3,7 @@
   integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
   integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous" />
 
@@ -21,17 +21,17 @@
     <p>Build your own Openshift Container Platform Cluster on PowerVM</p>
 
     <nav class="navbar navbar-expand-xl" style="background-color:#6988E7; margin: 0 auto">
-      <div class="collapse navbar-collapse" id="navbarNavDropdown" style="padding-left: 10px" method="get">
-        <form class="form-inline my-2 my-lg-0" method="post">
+      <div class="collapse navbar-collapse" id="navbarNavDropdown" style="padding-left: 10px">
+        <form class="form-inline my-2 my-lg-0" >
           <div class="form-group required pt-md-3 d-none">
             <label class="control-label" for="emailid"><b>Login Email</b></label>
             <input type="text" class="form-control" id="loginemailid" name="emailid" placeholder="Emailid">
           </div>
-          <button id="create-cluster-tab" formaction="/create" class="btn btn-light " type="submit">Create
+          <button id="create-cluster-tab" formaction="/create" formmethod="post" class="btn btn-light " type="submit">Create
             Cluster</button>
-          <button id="display-stack-tab" formaction="/refresh" class="btn btn-light" type="submit">Display
+          <button id="display-stack-tab" formaction="/refresh" formmethod="post" class="btn btn-light" type="submit">Display
             Stacks</button>
-          <button id="logout" formaction="/" class="btn btn-light" type="submit">Logout</button>
+          <button id="logout" formaction="/" formmethod="get" class="btn btn-light" type="submit">Logout</button>
         </form>
       </div>
     </nav>
@@ -171,7 +171,7 @@
 
     // On submit event
     $('#input-form').on('submit', function () {
-      //Display cluster creation message if required fields are not empty
+      //DDisplay cluster creation message if required fields are not empty
       if (document.forms["input-form"]["name"].value != "" &&
         document.forms["input-form"]["description"].value != "" &&
         document.forms["input-form"]["ocpversion"].value != "") {
